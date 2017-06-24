@@ -1,0 +1,64 @@
+{
+  "name": "koa-radix-router",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "koa",
+    "router",
+    "route",
+    "routing",
+    "koa-router",
+    "radix"
+  ],
+  "main": "index.js",
+  "typings": "index.d.ts",
+  "scripts": {
+    "bench": "ts-node benchmarks",
+    "test": "mocha --compilers ts:ts-node/register test/*.ts",
+    "cover": "nyc --extension .ts --require ts-node/register npm test",
+    "build": "tsc",
+    "prepublish": "npm run build",
+    "clean": "node -e '(fs=>[`index.js`,`index.js.map`,`index.d.ts`].map(f=>fs.existsSync(f)&&fs.unlinkSync(f)))(require(`fs`))'",
+    "zz": "ts-node benchmarks/server",
+    "zz2": "benchmarks/server/bench.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkeylu/koa-radix-router.git"
+  },
+  "author": "jKey Lu <jkeylu@gmail.com> (https://github.com/jkeylu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkeylu/koa-radix-router/issues"
+  },
+  "homepage": "https://github.com/jkeylu/koa-radix-router#readme",
+  "dependencies": {
+    "http-errors": "^1.6.1",
+    "koa-compose": "^4.0.0",
+    "path-handler-map": "^2.3.2"
+  },
+  "devDependencies": {
+    "@types/benchmark": "^1.0.30",
+    "@types/expect.js": "^0.3.29",
+    "@types/http-errors": "^1.5.34",
+    "@types/koa": "^2.0.39",
+    "@types/koa-compose": "^3.2.0",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.2",
+    "@types/should": "^8.3.0",
+    "@types/supertest": "^2.0.1",
+    "benchmark": "^2.1.4",
+    "expect.js": "^0.3.1",
+    "koa": "^2.3.0",
+    "koa-router": "^7.2.1",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.2",
+    "should": "^11.2.1",
+    "supertest": "^3.0.0",
+    "ts-node": "^3.1.0",
+    "typescript": "^2.4.0"
+  },
+  "engines": {
+    "node": ">=6"
+  }
+}
