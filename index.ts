@@ -139,12 +139,13 @@ export class Router {
                         }
                         return compose(preMiddleware.concat(items));
                     }
+                    return handler;
                 });
 
                 var parent = router.pathMap.tree.parent;
                 if (!this.strict && parent) {
                     methods.forEach(method => {
-                        parent.handlerMap[method] = {
+                        parent!.handlerMap[method] = {
                             handler: router.pathMap.tree.handlerMap[method].handler,
                             pnames: router.pathMap.tree.handlerMap[method].pnames.slice()
                         };
@@ -265,15 +266,15 @@ export class Router {
             ctx.foundHandler = false;
             if (r.found) {
                 params = {};
-                for (i = 0, len = r.pnames.length; i < len; i++) {
-                    params[r.pnames[i]] = r.pvalues[i];
+                for (i = 0, len = r.pnames!.length; i < len; i++) {
+                    params[r.pnames![i]] = r.pvalues[i];
                 }
                 ctx.foundHandler = true;
                 ctx.params = params;
                 ctx.pnames = r.pnames;
                 ctx.pvalues = r.pvalues;
                 try {
-                    return r.handler(ctx, next);
+                    return r.handler!(ctx, next);
                 } catch (e) {
                     return Promise.reject(e);
                 }
@@ -311,10 +312,10 @@ export class Router {
                     }
 
                     if (implemented.indexOf(ctx.method) < 0) {
-                        if (options.throw) {
+                        if (options!.throw) {
                             var notImplementedThrowable;
-                            if (typeof options.notImplemented === 'function') {
-                                notImplementedThrowable = options.notImplemented(); // set whatever the user returns from their function
+                            if (typeof options!.notImplemented === 'function') {
+                                notImplementedThrowable = options!.notImplemented!(); // set whatever the user returns from their function
                             } else {
                                 notImplementedThrowable = new HttpError.NotImplemented();
                             }
@@ -329,10 +330,10 @@ export class Router {
                             ctx.body = '';
                             ctx.set('Allow', allowed);
                         } else if (allowed.indexOf(ctx.method) < 0) {
-                            if (options.throw) {
+                            if (options!.throw) {
                                 var notAllowedThrowable;
-                                if (typeof options.methodNotAllowed === 'function') {
-                                    notAllowedThrowable = options.methodNotAllowed(); // set whatever the user returns from their function
+                                if (typeof options!.methodNotAllowed === 'function') {
+                                    notAllowedThrowable = options!.methodNotAllowed!(); // set whatever the user returns from their function
                                 } else {
                                     notAllowedThrowable = new HttpError.MethodNotAllowed();
                                 }
@@ -364,7 +365,7 @@ export class Router {
     }
 
     static url(path: string, params: { [key: string]: string; }) {
-        return path.replace(/(:[^\/]*|\*.*$)/g, (str: string, p1: string, offset: number, s: string) => {
+        return path.replace(/(:[^\/]*|\*.*$)/g, (_str: string, p1: string, _offset: number, _s: string) => {
             var name = p1;
             if (name.length > 1) {
                 name = name.substring(1);

@@ -16,11 +16,11 @@
     "bench": "ts-node benchmarks",
     "test": "mocha --compilers ts:ts-node/register test/*.ts",
     "cover": "nyc --extension .ts --require ts-node/register npm test",
-    "build": "tsc",
-    "prepublish": "npm run build",
-    "clean": "node -e '(fs=>[`index.js`,`index.js.map`,`index.d.ts`].map(f=>fs.existsSync(f)&&fs.unlinkSync(f)))(require(`fs`))'",
-    "zz": "ts-node benchmarks/server",
-    "zz2": "benchmarks/server/bench.sh"
+    "build": "npm run clean && tsc",
+    "prepublish": "npm run build && rimraf \"@(benchmarks|test)/**/*{.js,.js.map,.d.ts}\"",
+    "clean": "rimraf \"*{.js,.js.map,.d.ts}\" \"@(benchmarks|test)/**/*{.js,.js.map,.d.ts}\"",
+    "bench-server": "ts-node benchmarks/server",
+    "bench-wrk": "benchmarks/server/bench.sh"
   },
   "repository": {
     "type": "git",
@@ -53,6 +53,7 @@
     "koa-router": "^7.2.1",
     "mocha": "^3.4.2",
     "nyc": "^11.0.2",
+    "rimraf": "^2.6.1",
     "should": "^11.2.1",
     "supertest": "^3.0.0",
     "ts-node": "^3.1.0",

@@ -3,7 +3,7 @@ import * as Path from 'path';
 
 export const githubReplacement
     = JSON.parse(fs.readFileSync(Path.resolve(__dirname, '../node_modules/path-handler-map/test/helper.ts'), { encoding: 'utf8' })
-        .match(/const githubReplacement = ({[^}]*})/)[1]
+        .match(/const githubReplacement = ({[^}]*})/)![1]
         .replace(/\/\/.*/g, ''));
 
 export const githubApiList

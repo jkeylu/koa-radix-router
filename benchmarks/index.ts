@@ -32,7 +32,7 @@ suite
                 addCount,
                 path: githubApiList[i].path
             }
-            results.push(radixRoutes(<any>ctx, null));
+            results.push(radixRoutes(<any>ctx, Promise.resolve));
         }
 
         Promise.all(results).then(function () {
@@ -53,7 +53,7 @@ suite
                 addCount,
                 path: githubApiList[i].path
             }
-            results.push(koaRoutes(<any>ctx, null));
+            results.push(koaRoutes(<any>ctx, Promise.resolve));
         }
 
         Promise.all(results).then(function () {
@@ -65,7 +65,7 @@ suite
     .on('cycle', function (event: Benchmark.Event) {
         console.log(String(event.target))
     })
-    .on('complete', function () {
+    .on('complete', function (this: Benchmark.Suite) {
         console.log('Fastest is ' + this.filter('fastest').map((it: any) => it.name));
     })
     // run async
